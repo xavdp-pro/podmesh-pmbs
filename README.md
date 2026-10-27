@@ -1,6 +1,8 @@
 # PodMesh Backup Server (`podmesh-pmbs`) — v2.3.0
 
-**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. It provides 4 MiB SHA-256 Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, referenced-chunk integrity auditing (`Op 10` verification), and staging-verified restoration.
+[**🤖 AI-First Install & Config**](AI_INSTALL_AND_CONFIG.md) · [Intent](INTENT.md) · [Law](LAW.md) · [Lineage](LINEAGE.md) · [Agents](AGENTS.md)
+
+**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. It provides 4 MiB SHA-256 Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, referenced-chunk integrity auditing (`Op 10` verification), and staging-verified restoration — **100% AI-First and headless without any web UI dependency** (see **[`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md)**).
 
 ---
 

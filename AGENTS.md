@@ -1,5 +1,9 @@
 # Agents: Working in `podmesh-pmbs`
 
+> **🤖 AI-First Installation & Configuration Mandate**:
+> `podmesh-pmbs` is 100% AI-First and headless-native. Zero web UI is required to provision datastores, run 4 MB CAS deduplicated backups, execute `Op 10` referenced-chunk audits, or perform staging-verified restores.
+> 👉 **Autonomous AI Agents: Read [`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md) first for deterministic CLI, Unix Socket (`/var/lib/pmbs/pmbs.sock`), and systemd configuration protocols.**
+
 `podmesh-pmbs` follows the SHAPER PHOENIX two-repository + vault separation for human–AI tandems (Claude Code, Codex, Cursor, Antigravity, Muse, or any collaborating agent).
 
 Dialogue with the operator may be in French; **everything committed to this repository MUST be written in English (`en-US`)**.
