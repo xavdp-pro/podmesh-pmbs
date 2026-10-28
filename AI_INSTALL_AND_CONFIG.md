@@ -19,13 +19,42 @@
 
 ## 2. Step-by-Step AI Installation
 
-### 2.1 Build or Install the `pmbs` Binary
+### 2.0 Option A (Recommended on Debian 13 Trixie / Proxmox VE 9.x) — Zero-Touch `.deb` Package
+
+Build (or download) the reproducible Debian 13 `usrmerge`-compliant package (`podmesh-backup-server_2.3.0_amd64.deb`) and install it in one command:
+
+```bash
+./packaging/build-deb-pmbs.sh
+dpkg -i dist/podmesh-backup-server_2.3.0_amd64.deb
+```
+
+**What `dpkg -i` executes automatically (Zero-Touch AI-First Bootstrap)**:
+1. Installs `/usr/bin/pmbs` (`0755`) and `/usr/lib/systemd/system/pmbs.service` (`0644`, `UMask=0077`).
+2. Creates `/etc/pmbs` (`0700`) and `/var/lib/pmbs/datastores/datastore-default/{.chunks,snapshots}` (`0700`).
+3. Idempotently generates a 256-bit CSPRNG `PMBS_API_TOKEN` in `/etc/pmbs/pmbs.env` (`0600`) from `/dev/urandom` **only if not already present** (preserving existing tokens across `apt upgrade`).
+4. Enables and starts `pmbs.service` bound strictly to `127.0.0.1:8007` and `/var/lib/pmbs/pmbs.sock` (`0600`).
+
+**One-Shot AI Post-Install Verification ($k = 1$, < 50 ms)**:
+```bash
+set -euo pipefail
+set -a && source /etc/pmbs/pmbs.env && set +a
+dpkg-query -W podmesh-backup-server
+systemctl is-active pmbs.service
+stat -c '%a:%u:%g %n' /etc/pmbs/pmbs.env /var/lib/pmbs /var/lib/pmbs/pmbs.sock
+pmbs ping
+pmbs status
+pmbs datastore list
+```
+
+---
+
+### 2.1 Option B — Manual Build & Install from Source
 
 From the `podmesh-pmbs` repository root:
 
 ```bash
-cargo build --release
-install -m 0755 target/release/pmbs /usr/local/bin/pmbs
+cargo build --release --locked
+install -m 0755 target/release/pmbs /usr/bin/pmbs
 pmbs --version
 ```
 
