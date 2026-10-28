@@ -22,7 +22,7 @@ echo "=== [PMBS] Packaging Debian 13 (Trixie): ${PKG_NAME}_${PKG_VERSION}_${PKG_
 
 if [ ! -f "${RUST_BIN}" ]; then
     echo "Compiling release binary for PMBS v${PKG_VERSION}..."
-    cargo build --release --locked --manifest-path "${ROOT_DIR}/Cargo.toml"
+    cargo build --release --manifest-path "${ROOT_DIR}/Cargo.toml"
 fi
 
 trap 'rm -rf "${BUILD_DIR}"' EXIT
