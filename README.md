@@ -1,18 +1,21 @@
-# PodMesh Backup Server (`podmesh-pmbs`) — v2.3.0
+# PodMesh Backup Server (`podmesh-pmbs`) — v2.4.0
 
 [**🤖 AI-First Install & Config**](AI_INSTALL_AND_CONFIG.md) · [Intent](INTENT.md) · [Law](LAW.md) · [Lineage](LINEAGE.md) · [Agents](AGENTS.md)
 
-**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. It provides 4 MiB SHA-256 Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, referenced-chunk integrity auditing (`Op 10` verification), and staging-verified restoration — **100% AI-First and headless without any web UI dependency** (see **[`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md)**).
+**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. Transitioning from the experimental v2.3.0 demonstrator to **v2.4.0 universal multi-storage architecture**, it provides cross-platform backup capabilities for Proxmox VE, TrueNAS, Synology, Windows, and Podman, with atomic chunk reception, FastCDC / BLAKE3, 4 MiB Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, and WireGuard Dual-Hub multi-datastore replication without Single Point of Failure (SPOF) — **100% AI-First and headless without any web UI dependency** (see **[`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md)**).
 
 ---
 
 ## Key Capabilities
 
-- **4 MiB SHA-256 CAS Deduplication**: Splits regular files into canonical 4 MiB (`4,194,304` byte) chunks addressed by lowercase hex SHA-256 digests. Identical chunks across snapshots and workloads are stored once.
+- **Universal Multi-Platform Backup**: Seamless backup orchestration for Proxmox VE (VZDump), TrueNAS CORE/SCALE, Synology DSM, Windows Server (VSS), and Linux/Podman containers.
+- **Atomic Chunk Reception & FastCDC / BLAKE3**: Content-Defined Chunking with BLAKE3 cryptographic verification and atomic staging, eliminating chunk-write tearing and guaranteeing wire-speed ingestion.
+- **4 MiB CAS Deduplication**: Splits files into canonical 4 MiB (`4,194,304` byte) chunks addressed by content hash digests. Identical chunks across snapshots and workloads are stored once.
+- **WireGuard Dual-Hub Architecture (No SPOF)**: Inter-datastore backup replication and remote sync over dual-hub WireGuard tunnels without single point of failure.
 - **Atomic & Symlink-Safe Durability**: Every chunk and manifest write uses `O_NOFOLLOW`, owner-only permissions (`0700` directories, `0600` files), temporary staging files with `fsync` (`sync_all()`), and atomic POSIX `rename` / `create_new` (`O_CREAT | O_EXCL`).
 - **Cryptographic Pre-Commit & Pre-Restore Verification**:
   - Server refuses snapshot publication unless all referenced chunks exist on disk with exact matching byte sizes.
-  - Client restore (`pmbs restore`) verifies every chunk's SHA-256 digest and the full reconstructed file's SHA-256 digest in a staging directory before publishing to the target directory.
+  - Client restore (`pmbs restore`) verifies every chunk's digest and the full reconstructed file in a staging directory before publishing to the target directory.
 - **Dual Control Plane**:
   - **HTTP REST API** (`127.0.0.1:8007` by default) protected by constant-time `PMBS_API_TOKEN` Bearer authentication.
   - **Unix Domain Socket IPC** (`/var/lib/pmbs/pmbs.sock`, mode `0600`) for low-latency local node supervision (`PING`, `STATUS`, `LIST_DATASTORES`, `VERIFY`).
@@ -45,7 +48,7 @@ By default, `pmbs daemon` manages datastores under `/var/lib/pmbs` (configurable
 ```bash
 cargo build --release
 ./target/release/pmbs --version
-# pmbs 2.3.0
+# pmbs 2.4.0
 ```
 
 ---
@@ -125,7 +128,7 @@ All endpoints require header `Authorization: Bearer <PMBS_API_TOKEN>`:
 
 | Method | Endpoint | Description |
 | --- | --- | --- |
-| `GET` | `/`, `/status`, `/api/v1/status` | Server version (`2.3.0`), active datastores, and engine status |
+| `GET` | `/`, `/status`, `/api/v1/status` | Server version (`2.4.0`), active datastores, and engine status |
 | `GET` | `/api/v1/datastores` | List all initialized datastores |
 | `POST` | `/api/v1/datastores` | Create a new datastore (`{"name": "<datastore>"}`) |
 | `POST` | `/api/v1/datastores/:datastore/chunks` | Upload a raw chunk (`<= 4 MiB`); returns `{"ok": true, "chunkId": "<sha256>"}` |

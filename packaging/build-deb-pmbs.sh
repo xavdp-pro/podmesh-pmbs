@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # =============================================================================
-# PodMesh Backup Server (PMBS) v2.3.0 — Debian 13 (Trixie) Package Builder
+# PodMesh Backup Server (PMBS) v2.4.0 — Debian 13 (Trixie) Package Builder
 # Architected under Claude Fable 5.1 & GPT-6 Astra Counter-Review Invariants:
 #  - Debian 13 Trixie usrmerge compliance (/usr/lib/systemd/system/pmbs.service)
 #  - Zero-Touch CSPRNG 256-bit PMBS_API_TOKEN bootstrap in postinst (idempotent)
@@ -11,7 +11,7 @@
 set -euo pipefail
 
 PKG_NAME="podmesh-backup-server"
-PKG_VERSION="2.3.0"
+PKG_VERSION="2.4.0"
 PKG_ARCH="amd64"
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 BUILD_DIR="$(mktemp -d /tmp/build-${PKG_NAME}.XXXXXX)"
@@ -46,13 +46,13 @@ install -m 0755 "${RUST_BIN}" "${BUILD_DIR}/usr/bin/pmbs"
 # 2. Default static configuration file (protected via DEBIAN/conffiles)
 cat << 'EOF' > "${BUILD_DIR}/etc/pmbs/config.json"
 {
-  "version": "2.3.0",
+  "version": "2.4.0",
   "bind": "127.0.0.1",
   "port": 8007,
   "dataDir": "/var/lib/pmbs",
   "socket": "/var/lib/pmbs/pmbs.sock",
   "defaultDatastore": "datastore-default",
-  "dedupEngine": "SHA-256 CAS 4MB (Pure Rust)",
+  "dedupEngine": "FastCDC / BLAKE3 & SHA-256 CAS 4MB (Pure Rust)",
   "op10VerifierReady": true,
   "remoteSyncEnabled": true
 }
@@ -68,7 +68,7 @@ chmod 0644 "${BUILD_DIR}/DEBIAN/conffiles"
 # 4. Debian 13 usrmerge systemd service (/usr/lib/systemd/system/pmbs.service)
 cat << 'EOF' > "${BUILD_DIR}/usr/lib/systemd/system/pmbs.service"
 [Unit]
-Description=PodMesh Backup Server Daemon (Pure Rust 4MB CAS — AI-First v2.3.0)
+Description=PodMesh Backup Server Daemon (Pure Rust 4MB CAS — AI-First v2.4.0)
 After=network-online.target local-fs.target
 Wants=network-online.target
 
@@ -179,7 +179,7 @@ EOT
         systemctl daemon-reload || true
         systemctl enable pmbs.service || true
         systemctl restart pmbs.service || true
-        echo "[PMBS] Service pmbs.service (v2.3.0) enabled and started on 127.0.0.1:8007 + /var/lib/pmbs/pmbs.sock."
+        echo "[PMBS] Service pmbs.service (v2.4.0) enabled and started on 127.0.0.1:8007 + /var/lib/pmbs/pmbs.sock."
     fi
 fi
 exit 0

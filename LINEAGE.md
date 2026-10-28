@@ -3,9 +3,9 @@
 ## Origin and Extraction
 
 - **Repository**: `xavdp-pro/podmesh-pmbs`
-- **Extracted Version**: `v2.3.0`
-- **Extraction Date**: `2026-10-27`
-- **Upstream Source**: Extracted from [`xavdp-pro/podmesh`](https://github.com/xavdp-pro/podmesh) (`crates/pmbs`) following the **SHAPER PHOENIX** modular separation doctrine.
+- **Current Version**: `v2.4.0`
+- **Release Date**: `2026-10-28`
+- **Extraction Origin (v2.3.0)**: Extracted from [`xavdp-pro/podmesh`](https://github.com/xavdp-pro/podmesh) (`crates/pmbs`) following the **SHAPER PHOENIX** modular separation doctrine.
 - **Companion Laboratory Repository**: `xavdp-pro/podmesh-pmbs-lab` (private qualification evidence, Muse security/hardening audits, and Op 10 invariance records).
 
 ## Evolution Milestones
@@ -20,3 +20,8 @@
    - Qualified with MeshFS CAS invariance and Op 10 verification suites.
 3. **SHAPER PHOENIX Modular Separation (`v2.3.0`, 2026-10-27)**
    - Promoted from an internal workspace crate of `podmesh` into the standalone canonical repository `xavdp-pro/podmesh-pmbs` at version `2.3.0`, paired with its dedicated private qualification laboratory `xavdp-pro/podmesh-pmbs-lab`.
+4. **Universal Multi-Platform Backup Suite (`v2.4.0`, 2026-10-28)**
+   - **Sortie du démonstrateur expérimental v2.3.0** : accession au statut de serveur de sauvegarde universel de production.
+   - **Entrée dans l'ère multi-plateformes universelle** : support et intégration des sauvegardes de Proxmox VE (VZDump / fleecing), TrueNAS, Synology, hôtes Windows (VSS) et conteneurs Podman.
+   - **Réception atomique des chunks et FastCDC / BLAKE3** : ingestion ultra-rapide des flux de sauvegarde avec découpage adaptatif par contenu FastCDC et hachage BLAKE3 combiné au standard SHA-256 CAS 4MB.
+   - **Architecture WireGuard Dual-Hub sans SPOF** : synchronisation inter-datastores chiffrée sur topologie maillée à double concentrateur sans point unique de défaillance.
