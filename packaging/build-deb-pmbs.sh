@@ -46,7 +46,7 @@ install -m 0755 "${RUST_BIN}" "${BUILD_DIR}/usr/bin/pmbs"
 # 2. Default static configuration file (protected via DEBIAN/conffiles)
 cat << 'EOF' > "${BUILD_DIR}/etc/pmbs/config.json"
 {
-  "version": "2.4.0",
+  "version": "2.4.1",
   "bind": "127.0.0.1",
   "port": 8007,
   "dataDir": "/var/lib/pmbs",
@@ -179,7 +179,7 @@ EOT
         systemctl daemon-reload || true
         systemctl enable pmbs.service || true
         systemctl restart pmbs.service || true
-        echo "[PMBS] Service pmbs.service (v2.4.0) enabled and started on 127.0.0.1:8007 + /var/lib/pmbs/pmbs.sock."
+        echo "[PMBS] Service pmbs.service (v2.4.1) enabled and started on 127.0.0.1:8007 + /var/lib/pmbs/pmbs.sock."
     fi
 fi
 exit 0
