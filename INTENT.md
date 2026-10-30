@@ -1,17 +1,17 @@
 # PodMesh Backup Server (`podmesh-pmbs`) — Intent
 
-Status: Canonical Design Intent, v2.3.0 (2026-10-27).
+Status: Canonical Design Intent, v2.4.1 (2026-10-27).
 Owner: Xavier de Poorter. Prepared under the SHAPER PHOENIX canonical structure.
 
 ## Purpose
 
 `podmesh-pmbs` exists as an autonomous, high-performance deduplicated backup server written in Pure Rust. It provides sovereign, content-addressable storage (CAS) backup and restoration services for PodMesh universes, functional units, and Linux hosts without relying on external hypervisor lock-in or opaque binary blobs.
 
-By decomposing backup workloads into fixed-bound 4 MiB SHA-256 content-addressable chunks and sealing snapshot manifests with deterministic cryptographic digests (Merkle-style manifest and per-file + per-chunk verification), `podmesh-pmbs` guarantees that backup artifacts can be stored once across generations, verified independently of live runtimes, and restored with strict cryptographic proof.
+By decomposing backup workloads into fixed-bound 4 MiB BLAKE3 content-addressable chunks and sealing snapshot manifests with deterministic cryptographic digests (Merkle-style manifest and per-file + per-chunk verification), `podmesh-pmbs` guarantees that backup artifacts can be stored once across generations, verified independently of live runtimes, and restored with strict cryptographic proof.
 
 ## Architectural Pillars
 
-1. **4 MiB SHA-256 Content-Addressable Chunks (CAS)**
+1. **4 MiB BLAKE3 Content-Addressable Chunks (CAS)**
    Every regular file in a quiesced capture is sliced into up to 4 MiB (`4,194,304` bytes) segments. Each segment is addressed and stored by its lowercase hexadecimal SHA-256 digest in a two-level sharded directory tree (`.chunks/<first-2-hex>/<64-hex>.chunk`), eliminating duplicate storage across snapshots, containers, and hosts.
 
 2. **Merkle Sealing & Cryptographic Manifest Integrity**

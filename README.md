@@ -1,8 +1,8 @@
-# PodMesh Backup Server (`podmesh-pmbs`) — v2.4.0
+# PodMesh Backup Server (`podmesh-pmbs`) — v2.4.1
 
 [**🤖 AI-First Install & Config**](AI_INSTALL_AND_CONFIG.md) · [Intent](INTENT.md) · [Law](LAW.md) · [Lineage](LINEAGE.md) · [Agents](AGENTS.md)
 
-**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. Transitioning from the experimental v2.3.0 demonstrator to **v2.4.0 universal multi-storage architecture**, it provides cross-platform backup capabilities for Proxmox VE, TrueNAS, Synology, Windows, and Podman, with atomic chunk reception, FastCDC / BLAKE3, 4 MiB Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, and WireGuard Dual-Hub multi-datastore replication without Single Point of Failure (SPOF) — **100% AI-First and headless without any web UI dependency** (see **[`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md)**).
+**PodMesh Backup Server (`pmbs`)** is an autonomous, high-performance deduplicated backup server and CLI written in Pure Rust under the **SHAPER PHOENIX** architecture. Transitioning from the experimental v2.4.1 demonstrator to **v2.4.0 universal multi-storage architecture**, it provides cross-platform backup capabilities for Proxmox VE, TrueNAS, Synology, Windows, and Podman, with atomic chunk reception, FastCDC / BLAKE3, 4 MiB Content-Addressable Storage (CAS), atomic Merkle-sealed snapshot manifests, and WireGuard Dual-Hub multi-datastore replication without Single Point of Failure (SPOF) — **100% AI-First and headless without any web UI dependency** (see **[`AI_INSTALL_AND_CONFIG.md`](AI_INSTALL_AND_CONFIG.md)**).
 
 ---
 
@@ -30,7 +30,7 @@ By default, `pmbs daemon` manages datastores under `/var/lib/pmbs` (configurable
 /var/lib/pmbs/
 ├── pmbs.sock                                      # Local Unix Domain Socket (0600)
 └── datastore-default/                             # Default Datastore (0700)
-    ├── .chunks/                                   # Sharded 4 MiB SHA-256 CAS Pool
+    ├── .chunks/                                   # Sharded 4 MiB BLAKE3 CAS Pool
     │   ├── 00/
     │   │   └── 00a1b2...f9.chunk                  # Raw chunk bytes named by 64-hex SHA-256
     │   ├── ...

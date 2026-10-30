@@ -1,6 +1,6 @@
 # PodMesh Backup Server (`podmesh-pmbs`) — Invariant Law
 
-Status: Binding Architectural Invariants, v2.3.0 (2026-10-27).
+Status: Binding Architectural Invariants, v2.4.1 (2026-10-27).
 Scope: All code, CLI commands, HTTP REST endpoints, and local IPC handlers in `podmesh-pmbs`.
 
 ## Core Invariants
